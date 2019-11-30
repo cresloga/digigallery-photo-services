@@ -7,7 +7,7 @@ const awsS3Config =
 };
 
 exports.handler = function(event, context,callback) {
-	var picIndex = event.pathParameters.picIndex;
+	var picIndex = event.queryStringParameters.picIndex;
 	console.log("picIndex Received: "+picIndex);
 	const s3 = new S3(awsS3Config);
 	var params = {Bucket: S3_BUCKET};

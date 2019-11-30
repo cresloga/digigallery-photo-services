@@ -9,7 +9,7 @@ const awsS3Config =
 
 exports.handler = (event, context, callback) => {
 	console.log("Invoked Lambda function to deletePhoto");			
-	var fileName = event.pathParameters.fileName;
+	var fileName = event.queryStringParameters.fileName;
 	console.log("Received file name :"+fileName);
 	const s3 = new S3(awsS3Config);	
 	var urlParams = {Bucket: S3_BUCKET, Key: fileName};
