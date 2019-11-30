@@ -21,7 +21,7 @@ Resources:
         photos:
           Type: Api
           Properties:
-            Path: /photos/{picIndex}
+            Path: /photos?picIndex={picIndex}
             Method: get
             RestApiId: !Ref galleryApi
   uploadPhoto:
@@ -67,7 +67,7 @@ Resources:
         photos:
           Type: Api
           Properties:
-            Path: /photos/{fileName}
+            Path: /photos?fileName={fileName}
             Method: delete
             RestApiId: !Ref galleryApi
   galleryApi:
