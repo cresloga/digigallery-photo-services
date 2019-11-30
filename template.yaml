@@ -21,7 +21,10 @@ Resources:
         photos:
           Type: Api
           Properties:
-            Path: /photos?picIndex={picIndex}
+            Path: /photos
+            RequestParameters:
+              - method.request.querystring.picIndex:
+                  Required: true
             Method: get
             RestApiId: !Ref galleryApi
   uploadPhoto:
@@ -67,7 +70,10 @@ Resources:
         photos:
           Type: Api
           Properties:
-            Path: /photos?fileName={fileName}
+            Path: /photos
+            RequestParameters:
+              - method.request.querystring.fileName:
+                  Required: true
             Method: delete
             RestApiId: !Ref galleryApi
   galleryApi:
