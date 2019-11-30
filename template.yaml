@@ -77,7 +77,7 @@ Resources:
       StageName: prod
       Cors:
         AllowOrigin: "'*'"
-  photoBucketAccess:
+  photoBucketAccessRole:
     Type: AWS::IAM::Role
     Properties:
       ManagedPolicyArns:
