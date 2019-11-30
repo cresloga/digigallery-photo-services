@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  getPhoto:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: getPhotoV2
+      Description: API to fetch Signed URL and Filename from S3 Bucket for a given file index
+      Handler: index.handler
+      Runtime: nodejs8.10
+      Timeout: 60
+      CodeUri: ./
+      Role: !GetAtt photoBucketAccessRole.Arn
+      Layers:
+        - arn:aws:lambda:us-east-1:891956057524:layer:s3-dependencies:2
+      Environment:
+        Variables:
+          S3_BUCKET: '{{resolve:ssm:DIGIGALLERY_PHOTO_BUCKET:2}}'
+          S3_REGION: '{{resolve:ssm:DIGIGALLERY_PHOTO_BUCKET_REGION:1}}'
+      Events:
+        photos:
+          Type: Api
+          Properties:
+            Path: /photos/{picIndex}
+            Method: get
+            RestApiId: !Ref galleryApi
+  uploadPhoto:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: uploadPhotoV2
+      Description: API to delete a file from S3 Bucket for a given file index
+      Handler: index.handler
+      Runtime: nodejs8.10
+      Timeout: 60
+      CodeUri: ./
+      Role: !GetAtt photoBucketAccessRole.Arn
+      Layers:
+        - arn:aws:lambda:us-east-1:891956057524:layer:s3-dependencies:2
+      Environment:
+        Variables:
+          S3_BUCKET: '{{resolve:ssm:DIGIGALLERY_PHOTO_BUCKET:2}}'
+          S3_REGION: '{{resolve:ssm:DIGIGALLERY_PHOTO_BUCKET_REGION:1}}'
+      Events:
+        photos:
+          Type: Api
+          Properties:
+            Path: /photos
+            Method: put
+            RestApiId: !Ref galleryApi
+  deletePhoto:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: deletePhotoV2
+      Description: API to delete a file from S3 Bucket for a given file index
+      Handler: index.handler
+      Runtime: nodejs8.10
+      Timeout: 60
+      CodeUri: ./
+      Role: !GetAtt photoBucketAccessRole.Arn
+      Layers:
+        - arn:aws:lambda:us-east-1:891956057524:layer:s3-dependencies:2
+      Environment:
+        Variables:
+          S3_BUCKET: '{{resolve:ssm:DIGIGALLERY_PHOTO_BUCKET:1}}'
+          S3_REGION: '{{resolve:ssm:DIGIGALLERY_PHOTO_BUCKET_REGION:1}}'
+      Events:
+        photos:
+          Type: Api
+          Properties:
+            Path: /photos/{fileName}
+            Method: delete
+            RestApiId: !Ref galleryApi
+  galleryApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: galleryV2
+      StageName: prod
+      Cors:
+        AllowOrigin: "'*'"
+  photoBucketAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      AssumeRolePolicyDocument: 
+        Version: '2012-10-17'
+        Statement: 
+          - Effect: Allow
+            Principal:
+              Service:
+              - 'lambda.amazonaws.com'
+            Action: 
+              - 'sts:AssumeRole'
