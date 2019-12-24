@@ -10,7 +10,8 @@ Resources:
       Runtime: nodejs8.10
       Timeout: 60
       CodeUri: ./getphoto/
-      Role: !GetAtt photoBucketAccessRole.Arn
+      Role: !GetAtt photoBucketAccessRoleV2.Arn
+      Tracing: Active
       Layers:
         - arn:aws:lambda:us-east-1:891956057524:layer:s3-dependencies:2
       Environment:
@@ -27,6 +28,8 @@ Resources:
                   Required: true
             Method: get
             RestApiId: !Ref galleryApi
+    DependsOn:
+    - photoBucketAccessRoleV2
   uploadPhoto:
     Type: AWS::Serverless::Function
     Properties:
@@ -36,7 +39,8 @@ Resources:
       Runtime: nodejs8.10
       Timeout: 60
       CodeUri: ./uploadphoto/
-      Role: !GetAtt photoBucketAccessRole.Arn
+      Role: !GetAtt photoBucketAccessRoleV2.Arn
+      Tracing: Active
       Layers:
         - arn:aws:lambda:us-east-1:891956057524:layer:s3-dependencies:2
       Environment:
@@ -50,6 +54,8 @@ Resources:
             Path: /photos
             Method: put
             RestApiId: !Ref galleryApi
+    DependsOn:
+    - photoBucketAccessRoleV2
   deletePhoto:
     Type: AWS::Serverless::Function
     Properties:
@@ -59,7 +65,8 @@ Resources:
       Runtime: nodejs8.10
       Timeout: 60
       CodeUri: ./deletephoto/
-      Role: !GetAtt photoBucketAccessRole.Arn
+      Role: !GetAtt photoBucketAccessRoleV2.Arn
+      Tracing: Active
       Layers:
         - arn:aws:lambda:us-east-1:891956057524:layer:s3-dependencies:2
       Environment:
@@ -76,14 +83,17 @@ Resources:
                   Required: true
             Method: delete
             RestApiId: !Ref galleryApi
+    DependsOn:
+    - photoBucketAccessRoleV2
   galleryApi:
     Type: AWS::Serverless::Api
     Properties:
       Name: galleryV2
       StageName: prod
+      TracingEnabled: true
       Cors:
         AllowOrigin: "'*'"
-  photoBucketAccessRole:
+  photoBucketAccessRoleV2:
     Type: AWS::IAM::Role
     Properties:
       ManagedPolicyArns:
@@ -98,3 +108,13 @@ Resources:
               - 'lambda.amazonaws.com'
             Action: 
               - 'sts:AssumeRole'
+      Policies:
+      - PolicyName: digigallery-xray-lambda-policy
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Action:
+            - "xray:PutTraceSegments"
+            - "xray:PutTelemetryRecords"
+            Effect: Allow
+            Resource: "*"
