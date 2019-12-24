@@ -11,6 +11,8 @@ Resources:
       Timeout: 60
       CodeUri: ./getphoto/
       Role: !GetAtt photoBucketAccessRole.Arn
+      TracingEnabled: true
+      Tracing: Active
       Layers:
         - arn:aws:lambda:us-east-1:891956057524:layer:s3-dependencies:2
       Environment:
@@ -37,6 +39,8 @@ Resources:
       Timeout: 60
       CodeUri: ./uploadphoto/
       Role: !GetAtt photoBucketAccessRole.Arn
+      TracingEnabled: true
+      Tracing: Active
       Layers:
         - arn:aws:lambda:us-east-1:891956057524:layer:s3-dependencies:2
       Environment:
@@ -60,6 +64,8 @@ Resources:
       Timeout: 60
       CodeUri: ./deletephoto/
       Role: !GetAtt photoBucketAccessRole.Arn
+      TracingEnabled: true
+      Tracing: Active
       Layers:
         - arn:aws:lambda:us-east-1:891956057524:layer:s3-dependencies:2
       Environment:
@@ -81,6 +87,8 @@ Resources:
     Properties:
       Name: galleryV2
       StageName: prod
+      TracingEnabled: true
+      Tracing: Active
       Cors:
         AllowOrigin: "'*'"
   photoBucketAccessRole:
@@ -88,6 +96,7 @@ Resources:
     Properties:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       AssumeRolePolicyDocument: 
         Version: '2012-10-17'
         Statement: 
