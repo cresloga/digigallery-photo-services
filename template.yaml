@@ -7,7 +7,7 @@ Resources:
       FunctionName: getPhotoV2
       Description: API to fetch Signed URL and Filename from S3 Bucket for a given file index
       Handler: index.handler
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Timeout: 60
       CodeUri: ./getphoto/
       Role: !GetAtt photoBucketAccessRoleV2.Arn
@@ -36,7 +36,7 @@ Resources:
       FunctionName: uploadPhotoV2
       Description: API to delete a file from S3 Bucket for a given file index
       Handler: index.handler
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Timeout: 60
       CodeUri: ./uploadphoto/
       Role: !GetAtt photoBucketAccessRoleV2.Arn
@@ -62,7 +62,7 @@ Resources:
       FunctionName: deletePhotoV2
       Description: API to delete a file from S3 Bucket for a given file index
       Handler: index.handler
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Timeout: 60
       CodeUri: ./deletephoto/
       Role: !GetAtt photoBucketAccessRoleV2.Arn
