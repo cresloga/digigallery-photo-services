@@ -9,9 +9,10 @@ const awsS3Config =
 exports.handler = (event, context, callback) => {
   console.log("Event Received : "+ JSON.stringify(event, null, 2));
   console.log("S3 Bucket : "+S3_BUCKET);
+  var request = JSON.parse(event.body);
   const s3 = new S3(awsS3Config);
-  var fileName = event.body.fileName;
-  var fileType = event.body.fileType;
+  var fileName = request.fileName;
+  var fileType = request.fileType;
   console.log("fileName : "+fileName);
   console.log("fileType : "+fileType);
   const s3Params = {
