@@ -99,7 +99,6 @@ Resources:
         info:
           version: "1.0"
           title: "galleryV2"
-        host: "nctb8xrt2l.execute-api.us-east-1.amazonaws.com"
         basePath: "/prod"
         schemes:
         - "https"
@@ -121,20 +120,6 @@ Resources:
                 required: true
                 type: "string"
               responses: {}
-            options:
-              consumes:
-              - "application/json"
-              produces:
-              - "application/json"
-              responses:
-                "200":
-                  description: "200 response"
-                  headers:
-                    Access-Control-Allow-Origin:
-                      type: "string"
-                    Access-Control-Allow-Methods:
-                      type: "string"
-
   photoBucketAccessRoleV2:
     Type: AWS::IAM::Role
     Properties:
