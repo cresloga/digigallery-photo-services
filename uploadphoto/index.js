@@ -7,7 +7,7 @@ const awsS3Config =
 };
 
 exports.handler = (event, context, callback) => {
-  console.log("Event Received : "+ event);
+  console.log("Event Received : "+ JSON.stringify(event, null, 2));
   console.log("S3 Bucket : "+S3_BUCKET);
   const s3 = new S3(awsS3Config);
   var fileName = event.body.fileName;
