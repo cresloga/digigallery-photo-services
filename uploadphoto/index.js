@@ -49,6 +49,9 @@ function respond(responseStatus, responseContentType, responseBody, callback){
 	var response = {
 		"statusCode": responseStatus,
 		"headers": {
+      "Access-Control-Allow-Headers": '*',
+      "Access-Control-Allow-Origin": '*',
+      "Access-Control-Allow-Methods": '*',
 			"Content-Type": responseContentType
 		},
 		"body": JSON.stringify(responseBody),
