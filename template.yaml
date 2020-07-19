@@ -93,6 +93,48 @@ Resources:
       TracingEnabled: true
       Cors:
         AllowOrigin: "'*'"
+        AllowMethods: "'POST, GET, PUT, DELETE'"
+      DefinitionBody:
+        swagger: "2.0"
+        info:
+          version: "1.0"
+          title: "galleryV2"
+        host: "nctb8xrt2l.execute-api.us-east-1.amazonaws.com"
+        basePath: "/prod"
+        schemes:
+        - "https"
+        paths:
+          /photos:
+            get:
+              parameters:
+              - name: "picIndex"
+                in: "query"
+                required: true
+                type: "string"
+              responses: {}
+            put:
+              responses: {}
+            delete:
+              parameters:
+              - name: "fileName"
+                in: "query"
+                required: true
+                type: "string"
+              responses: {}
+            options:
+              consumes:
+              - "application/json"
+              produces:
+              - "application/json"
+              responses:
+                200:
+                  description: "200 response"
+                  headers:
+                    Access-Control-Allow-Origin:
+                      type: "string"
+                    Access-Control-Allow-Methods:
+                      type: "string"
+
   photoBucketAccessRoleV2:
     Type: AWS::IAM::Role
     Properties:
