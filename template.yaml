@@ -93,7 +93,8 @@ Resources:
       TracingEnabled: true
       Cors:
         AllowOrigin: "'*'"
-        AllowMethods: "'POST, GET, PUT, DELETE'"
+        AllowMethods: "'*'"
+        AllowHeaders: "'*'"
       DefinitionBody:
         swagger: "2.0"
         info:
