@@ -111,8 +111,19 @@ Resources:
                 required: true
                 type: "string"
               responses: {}
+              x-amazon-apigateway-integration:
+                httpMethod: post
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${getPhoto.Arn}/invocations
+        
             put:
               responses: {}
+              x-amazon-apigateway-integration:
+                httpMethod: post
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${uploadPhoto.Arn}/invocations
             delete:
               parameters:
               - name: "fileName"
@@ -120,6 +131,11 @@ Resources:
                 required: true
                 type: "string"
               responses: {}
+              x-amazon-apigateway-integration:
+                httpMethod: post
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${deletePhoto.Arn}/invocations
   photoBucketAccessRoleV2:
     Type: AWS::IAM::Role
     Properties:
