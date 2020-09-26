@@ -90,6 +90,10 @@ Resources:
     Properties:
       Name: galleryV2
       StageName: prod
+      MethodSettings:
+      - LoggingLevel: info
+        ResourcePath: '/*'
+        HttpMethod: '*'
       TracingEnabled: true
       Cors:
         AllowOrigin: "'*'"
