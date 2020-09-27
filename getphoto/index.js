@@ -24,7 +24,7 @@ exports.handler = function(event, context,callback) {
 			respond(responseStatus, responseContentType, responseBody, callback);
 		}
 		else{
-			console.log("List of Objects: "+data);
+			console.log("List of Objects: "+ JSON.stringify(data));
 			var bucketContents = data.Contents;
 			if(picIndex<0) picIndex = bucketContents.length-1;
 			else if (picIndex>=bucketContents.length) picIndex = 0;		
